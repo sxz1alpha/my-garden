@@ -9,13 +9,20 @@ var searchAPI = function(userSearch) {
     // api address as variable
     var APIAddress = `https://openfarm.cc/api/v1/crops/?filter=${userSearch}`;
     
+    // API Fetch
     fetch(APIAddress)
         .then(function(response) {
+            // if response ok, json and send to displayResults function
             if(response.ok) {
-                displayResults(response.json());
+                return response.json();
+            // if error with response, update DOM
             } else {
-                searchDisplayEl.text("There was an error processing your request. Please alert the dev team.")
+                searchDisplayEl.text("There was an error processing your request. Please alert the dev team.");
+                return
             }
+        })
+        .then(function(data) {
+            displayResults(data);
         })
         .catch(function(error) {
             searchDisplayEl.text(`An error has occurred... ${error}`);
@@ -24,7 +31,17 @@ var searchAPI = function(userSearch) {
 
 // function to display search results from API request to the DOM
 var displayResults = function(results) {
-    console.log(results);
+    // clear previous search/information from DOM
+    searchDisplayEl.text("");
+    // ensure there are results in the search
+    if(results.data.length < 1) {
+        searchDisplayEl.text("You search yielded no crops... please try searching by a different name.");
+        return
+    }
+
+    for(var i = 0; i < results.data.length; i++) {
+        searchDisplayEl.append($("<div>").text(results.data[i].attributes.name));
+    }
 };
 
 // search button handler
