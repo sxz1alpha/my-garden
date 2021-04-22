@@ -4,6 +4,17 @@ function addModalId(id) {
 
 function modalInformationHandler(plantId) {
     var modalFetchUrl = "https://openfarm.cc/api/v1/crops/" + plantId
+    fetch(modalFetchUrl)
+    .then(function(response) {
+        if (response.ok) {
+            return response.json()
+        } else {
+            // return something if it failed
+        }
+    })
+    .then(function(data) {
+        console.log(data);
+    })
 }
 
 function modalTriggerHandler() {
