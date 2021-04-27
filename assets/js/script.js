@@ -1,3 +1,5 @@
+var myGarden = []
+
 // DOM objects stored as variables
 var searchDisplayEl = $('#searchResults');
 
@@ -29,6 +31,21 @@ var searchAPI = function(userSearch) {
         });
 };
 
+var favesAppend = function() {
+    $('#faves').children().remove()
+    for (i = 0; i < myGarden.length; i++) {
+        
+        $('#faves').append(`
+        <li>
+            <button 
+            class="garden-item modal-trigger" 
+            href="${myGarden[i].id}"
+            >${myGarden[i].name}</button>
+        </li>`
+    )
+    }
+    
+};
 // function to display search results from API request to the DOM
 var displayResults = function(results) {
     // clear previous search/information from DOM
@@ -58,12 +75,6 @@ var displayResults = function(results) {
         
         cardEl.append(imageDiv);
         
-        // var contentDiv = $('<div>').addClass('card-content');
-
-        // var pEl = $('<p>').text(results.data[i].attributes.description);
-        // contentDiv.append(pEl);
-
-        // cardEl.append(contentDiv);
         colEl.append(cardEl);
 
         // add card to page
@@ -71,40 +82,38 @@ var displayResults = function(results) {
        
         
     }
-    // makes the button element in the my garden section
-    $("#fav-btn").click(function() {
-        //prevents double adding the same plant to the garden
-        if ($(this).attr('href') === $('.garden-list').children().attr('id')) {
-            console.log("success!!")
-            return;
-
-        } else {
-            // appends the plant to the my garden section
-            $('#faves').append(`
-                <li class="garden-list">
-                    <button 
-                    class="garden-item modal-trigger" 
-                    href="${$(this).attr('href')}"
-                    id="${$(this).attr('href')}"
-                    >${$(this).attr('name')}</button>
-                </li>`
-            )
-            //saves the href id and object name to local storage
-            $("#fav-btn").click(function() {
-        
-                let name = $(this).attr('name');
-                window.localStorage.setItem($(this).attr('href') , name);
-            })
-        }
-    });
-    
 };
+
+// makes the button element in the my garden section
+$("body").on("click", "#fav-btn", function() {
+    
+    var plant = {name: `${$(this).attr('name')}`, id: `${$(this).attr('href')}`}
+    if (!myGarden.includes(plant)) {
+        myGarden.push(plant);
+    }
+    // appends the plant to the my garden section
+    favesAppend();
+    saveLocal();
+    
+});
+
+var saveLocal = function() {
+    localStorage.setItem("myGardenPlants", JSON.stringify(myGarden));
+};
+
+var getLocal = function() {
+    myGarden = JSON.parse(localStorage.getItem("myGardenPlants"));
+    if (!myGarden) {
+        myGarden = []
+    }
+    favesAppend();
+};
+
 //clears the my garden section
 $("#garden-clear").click(function() {
     $('#faves').children().remove();
 });
     
-
 // search button handler
 $("#searchBtn").click(function(event) {
     // prevent default on submit
@@ -154,12 +163,12 @@ function modalTriggerHandler(modalId, fetchData) {
    $(modalImg).attr('src', fetchData.data.attributes.main_image_path).addClass('modal-img')
    $(modalText).text('Description: ' + fetchData.data.attributes.description)
    $('#fav-btn').attr('href', '#' + modalId).attr('name', fetchData.data.attributes.name);
-   console.log(fetchData)
+//    console.log(fetchData)
 }
 
 $(searchDisplayEl).on('click', 'a', function(event) { 
     var aTagId = $(this).attr('href')
-    console.log($(this).attr('href'))
+    // console.log($(this).attr('href'))
     var modalId = aTagId.replace('#', '');
     addModalId(modalId);
     $('#' + modalId).modal();
@@ -169,7 +178,7 @@ $(searchDisplayEl).on('click', 'a', function(event) {
 
 $(".garden-item").on('click', function(event) { 
     var aTagId = $(this).attr('href')
-    console.log($(this).attr('href'))
+    // console.log($(this).attr('href'))
     var modalId = aTagId.replace('#', '');
     addModalId(modalId);
     $('#' + modalId).modal();
@@ -177,3 +186,4 @@ $(".garden-item").on('click', function(event) {
 });
 
 
+getLocal();
