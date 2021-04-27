@@ -102,14 +102,14 @@ function modalInformationFetchHandler(plantId) {
         if (response.ok) {
             return response.json()
         } else {
-            errorModal('There was an error processing your request. Please alert the dev team.')
+            // find way to create error modal
         }
     })
     .then(function(data) {
         modalDisplayHandler(plantId, data)
     })
     .catch(function(error) {
-        errorModal(`An error has occurred... ${error}`)
+        console.log(error)
     });
    
 }
@@ -187,8 +187,29 @@ function modalDisplayHandler(modalId, fetchData) {
     // attatches the modal id as an href attribute for my garden button
    $('#fav-btn').attr('href', '#' + modalId);
 
-
+    videoPlayerFetch(fetchData.data.attributes.name)
    console.log(fetchData)
+}
+
+function videoPlayerFetch(plant) {
+    var youtubeData = ""
+    var videoUrl = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&type=video&q=how%20to%20plant%20" + plant + "&key=AIzaSyAEFirxIyuY1z9A7SZBZWH4EJJ-HwM3pxk"
+    fetch(videoUrl)
+    .then(function(response) {
+        return response.json()
+    })
+    .then(function(data) {
+        // youtubeData is now an array of 5 videos+information
+        youtubeData = data.items
+        console.log(youtubeData)
+        videoPlayerHandler(youtubeData)
+    })
+
+}
+
+function videoPlayerHandler(youtubeData) {
+    for (var i = 0; i < youtubeData.length; i++)
+    $('#player' + i).attr('src', 'https://www.youtube.com/embed/' + youtubeData[i].id.videoId + '?enablejsapi=1')
 }
 
 
@@ -214,8 +235,3 @@ $(searchDisplayEl).on('click', 'a', function(event) {
     modalInformationFetchHandler(modalId);
     
 });
-
-// function errorModal(error) {
-//     $('#errorModal').modal();
-//     $('#errorTag').text(error);
-// }
