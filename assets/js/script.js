@@ -89,39 +89,39 @@ $("#searchBtn").click(function(event) {
 // ----------------------------------------
 // start Dakota's Code
 
-// function addModalId(id) {
-//     $('.modal').attr('id', id);
-// }
+function addModalId(id) {
+    $('.modal').attr('id', id);
+}
 
-// function modalInformationHandler(plantId) {
-//     var modalFetchUrl = "https://openfarm.cc/api/v1/crops/" + plantId
-//     fetch(modalFetchUrl)
-//     .then(function(response) {
-//         if (response.ok) {
-//             return response.json()
-//         } else {
-//             // return something if it failed
-//         }
-//     })
-//     .then(function(data) {
-//         console.log(data);
-//     })
-// }
+function modalInformationHandler(plantId) {
+    var modalFetchUrl = "https://openfarm.cc/api/v1/crops/" + plantId
+    fetch(modalFetchUrl)
+    .then(function(response) {
+        if (response.ok) {
+            return response.json()
+        } else {
+            // return something if it failed
+        }
+    })
+    .then(function(data) {
+        console.log(data);
+    })
+}
 
-// function modalTriggerHandler() {
+function modalTriggerHandler() {
    
-// }
-searchDisplayEl.on('click', function(event) { 
-    console.log(event.target.querySelector('.modal-trigger'))
-    var aTagHref = $(this).children('.modal-trigger').attr('href')
-    console.log(aTagHref)
+}
+$(searchDisplayEl).on('click', 'a', function(event) { 
+    var aTagId = $(this).attr('href')
 
-    // var modalId = aTagId.replace('#', '');
+    console.log($(this).attr('href'))
+
+    var modalId = aTagId.replace('#', '');
    
     
-    // addModalId(modalId);
+    addModalId(modalId);
 
-    // $('#' + modalId).modal();
+    $('#' + modalId).modal();
 
-    // modalInformationHandler(modalId);
+    modalInformationHandler(modalId);
 });
