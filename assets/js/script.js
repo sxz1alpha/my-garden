@@ -71,6 +71,7 @@ var displayResults = function(results) {
        
         
     }
+    // makes the button element in the my garden section
     $("#fav-btn").click(function() {
         console.log(this)
         $('#faves').append(`
@@ -78,8 +79,14 @@ var displayResults = function(results) {
                 <button class="garden-item modal-trigger" href="${$(this).attr('href')}">${$(this).attr('name')}</button>
             </li>`
         )
-        
+        //saves the href id and object name to local storage
+        $("#fav-btn").click(function() {
+    
+            let name = $(this).attr('name');
+            window.localStorage.setItem($(this).attr('href') , name);
+        })
     });
+    
 
 
 };
