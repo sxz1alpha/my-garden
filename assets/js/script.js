@@ -104,13 +104,37 @@ function modalInformationHandler(plantId) {
         }
     })
     .then(function(data) {
-        console.log(data);
+        modalTriggerHandler(plantId, data)
     })
-}
 
-function modalTriggerHandler() {
    
 }
+
+function modalTriggerHandler(modalId, fetchData) {
+    var modalContent = $('#' + modalId).children('.modal-content')
+    var modalHeader = $(modalContent).children('#modalHeader')
+    var modalSubHeader = $(modalContent).children('#modalSubHeader')
+    var modalImg = $(modalContent).children('#modalImg')
+    var modalText = $(modalContent).children('#modalP')
+
+    
+    $(modalHeader).text(fetchData.data.attributes.name)
+    
+    if (fetchData.data.attributes.common_names) {
+        $(modalSubHeader).text('Common name(s): ' + fetchData.data.attributes.common_names.join(', '))
+    } else {
+        $(modalSubHeader).empty()
+    }
+
+   $(modalImg).attr('src', fetchData.data.attributes.main_image_path).addClass('modal-img')
+
+   $(modalText).text('Description: ' + fetchData.data.attributes.description)
+
+
+   console.log(fetchData)
+}
+
+
 $(searchDisplayEl).on('click', 'a', function(event) { 
     var aTagId = $(this).attr('href')
 
@@ -124,4 +148,6 @@ $(searchDisplayEl).on('click', 'a', function(event) {
     $('#' + modalId).modal();
 
     modalInformationHandler(modalId);
+    
 });
+
