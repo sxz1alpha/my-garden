@@ -212,7 +212,14 @@ function videoPlayerFetch(plant) {
 function videoPlayerHandler(youtubeData) {
     $('.videoSection').append($('<h5>').text('Top 5 Videos:'))
     for (var i = 0; i < youtubeData.length; i++)
-    $('.videoSection').append($('<iframe>').attr('id', 'player' + i).attr('frameborder', '0').attr('src', 'https://www.youtube.com/embed/' + youtubeData[i].id.videoId + '?enablejsapi=1'))
+    $('.videoSection')
+    .append(
+        $('<iframe>')
+        .attr('id', 'player' + i)
+        .attr('frameborder', '0')
+        .attr('src', 'https://www.youtube.com/embed/' + youtubeData[i].id.videoId + '?enablejsapi=1')
+        .attr('allow', 'fullscreen;')
+    )
 }
 
 
