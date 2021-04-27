@@ -73,23 +73,37 @@ var displayResults = function(results) {
     }
     // makes the button element in the my garden section
     $("#fav-btn").click(function() {
-        console.log(this)
-        $('#faves').append(`
-            <li>
-                <button class="garden-item modal-trigger" href="${$(this).attr('href')}">${$(this).attr('name')}</button>
-            </li>`
-        )
-        //saves the href id and object name to local storage
-        $("#fav-btn").click(function() {
-    
-            let name = $(this).attr('name');
-            window.localStorage.setItem($(this).attr('href') , name);
-        })
+        //prevents double adding the same plant to the garden
+        if ($(this).attr('href') === $('.garden-list').children().attr('id')) {
+            console.log("success!!")
+            return;
+
+        } else {
+            // appends the plant to the my garden section
+            $('#faves').append(`
+                <li class="garden-list">
+                    <button 
+                    class="garden-item modal-trigger" 
+                    href="${$(this).attr('href')}"
+                    id="${$(this).attr('href')}"
+                    >${$(this).attr('name')}</button>
+                </li>`
+            )
+            //saves the href id and object name to local storage
+            $("#fav-btn").click(function() {
+        
+                let name = $(this).attr('name');
+                window.localStorage.setItem($(this).attr('href') , name);
+            })
+        }
     });
     
-
-
 };
+//clears the my garden section
+$("#garden-clear").click(function() {
+    $('#faves').children().remove();
+});
+    
 
 // search button handler
 $("#searchBtn").click(function(event) {
