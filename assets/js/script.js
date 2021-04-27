@@ -89,10 +89,12 @@ $("#searchBtn").click(function(event) {
 // ----------------------------------------
 // start Dakota's Code
 
+// add id from plantId to modal 
 function addModalId(id) {
     $('.modal').attr('id', id);
 }
 
+// makes the fetch to openfarm, passing in the plantId from click function
 function modalInformationHandler(plantId) {
     var modalFetchUrl = "https://openfarm.cc/api/v1/crops/" + plantId
     fetch(modalFetchUrl)
@@ -110,43 +112,54 @@ function modalInformationHandler(plantId) {
    
 }
 
+// populates the modal with plant info
 function modalTriggerHandler(modalId, fetchData) {
+    // creates variables to target modal elements
     var modalContent = $('#' + modalId).children('.modal-content')
     var modalHeader = $(modalContent).children('#modalHeader')
     var modalSubHeader = $(modalContent).children('#modalSubHeader')
     var modalImg = $(modalContent).children('#modalImg')
     var modalText = $(modalContent).children('#modalP')
 
-    
+    // populates modal header with plant name from openfarm
     $(modalHeader).text(fetchData.data.attributes.name)
     
+    // if there are common names, then populate as sub header
+    // else, clear current sub header
     if (fetchData.data.attributes.common_names) {
         $(modalSubHeader).text('Common name(s): ' + fetchData.data.attributes.common_names.join(', '))
     } else {
         $(modalSubHeader).empty()
     }
 
+    // sets image src to the url from openfarm
    $(modalImg).attr('src', fetchData.data.attributes.main_image_path).addClass('modal-img')
 
+    // populates the description from openfarm
    $(modalText).text('Description: ' + fetchData.data.attributes.description)
+
+    // attatches the modal id as an href attribute for my garden button
+   $('#fav-btn').attr('href', '#' + modalId);
 
 
    console.log(fetchData)
 }
 
-
+// On click of the search area, this function looks for an <a> tag and cathes the href attribute
 $(searchDisplayEl).on('click', 'a', function(event) { 
+    // finds the href attribute
     var aTagId = $(this).attr('href')
 
-    console.log($(this).attr('href'))
-
+    // gets rid of '#' 
     var modalId = aTagId.replace('#', '');
    
-    
+    // runs function to add modalid to the modal div
     addModalId(modalId);
 
+    // looks for that new modal and initializes it
     $('#' + modalId).modal();
 
+    // sends modal id to the fetch function
     modalInformationHandler(modalId);
     
 });
