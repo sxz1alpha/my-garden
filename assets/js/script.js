@@ -217,5 +217,17 @@ $(searchDisplayEl).on('click', 'a', function(event) {
     
 });
 
-// $('.modal').on('blur', function)
+$('.modal').on('blur', function() {
+    $('#modalHeader').empty();
+    $('#modalSubHeader').empty();
+    $('#modalImg').attr('src', '');
+    $('#plantDescription').empty();
+    $('#plantHeight').empty();
+    $('#plantSpread').empty();
+    $('#plantGrowthTime').empty();
+    $('#plantSpacing').empty();
+    $('#plantSowingMethod').empty();
+    $('#plantSunReq').empty();
+
+})
 
