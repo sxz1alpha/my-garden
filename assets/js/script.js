@@ -95,7 +95,7 @@ function addModalId(id) {
 }
 
 // makes the fetch to openfarm, passing in the plantId from click function
-function modalInformationHandler(plantId) {
+function modalInformationFetchHandler(plantId) {
     var modalFetchUrl = "https://openfarm.cc/api/v1/crops/" + plantId
     fetch(modalFetchUrl)
     .then(function(response) {
@@ -106,14 +106,13 @@ function modalInformationHandler(plantId) {
         }
     })
     .then(function(data) {
-        modalTriggerHandler(plantId, data)
+        modalDisplayHandler(plantId, data)
     })
-
    
 }
 
 // populates the modal with plant info
-function modalTriggerHandler(modalId, fetchData) {
+function modalDisplayHandler(modalId, fetchData) {
     // creates variables to target modal elements
     // var modalContent = $('#' + modalId).children('.modal-content')
     // var modalHeader = $(modalContent).children('#modalHeader')
@@ -150,9 +149,12 @@ function modalTriggerHandler(modalId, fetchData) {
 
    // add height (cm) if openfarm has one listed
    if (fetchData.data.attributes.height) {
-    $('#plantHeight').text('Height: ' + fetchData.data.attributes.height + ' cm')
+       $('#plantHeight').text('Height: ' + fetchData.data.attributes.height + ' cm ')
+    //    .append('<a class="btn tooltipped" data-position="top" data-tooltip="1 in = 2.56 cm">&#63;</a>')  
+    
+       $('.tooltipped').tooltip()
     } else {
-    $('#plantHeight').text('Height: There is no height listed for this plant')
+        $('#plantHeight').text('Height: There is no height listed for this plant')
     }
 
    // add spread if openfarm has one listed
@@ -212,8 +214,11 @@ $(searchDisplayEl).on('click', 'a', function(event) {
     // looks for that new modal and initializes it
     $('#' + modalId).modal();
 
+    // displays loading message for user
+    $('#modalHeader').text('Loading...');
+
     // sends modal id to the fetch function
-    modalInformationHandler(modalId);
+    modalInformationFetchHandler(modalId);
     
 });
 
