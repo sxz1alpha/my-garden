@@ -115,79 +115,79 @@ function modalInformationHandler(plantId) {
 // populates the modal with plant info
 function modalTriggerHandler(modalId, fetchData) {
     // creates variables to target modal elements
-    var modalContent = $('#' + modalId).children('.modal-content')
-    var modalHeader = $(modalContent).children('#modalHeader')
-    var modalSubHeader = $(modalContent).children('#modalSubHeader')
-    var modalImg = $(modalContent).children('#modalImg')
-    var plantDescription = $(modalContent).children('#plantDescription')
-    var plantHeight = $(modalContent).children('#plantHeight')
-    var plantSpread = $(modalContent).children('#plantSpread')
-    var plantGrowthTime = $(modalContent).children('#plantGrowthTime')
-    var plantSpacing = $(modalContent).children('#plantSpacing')
-    var plantSowingMethod = $(modalContent).children('#plantSowingMethod')
-    var plantSunReq = $(modalContent).children('#plantSunReq')
+    // var modalContent = $('#' + modalId).children('.modal-content')
+    // var modalHeader = $(modalContent).children('#modalHeader')
+    // var modalSubHeader = $(modalContent).children('#modalSubHeader')
+    // var modalImg = $(modalContent).children('#modalImg')
+    // var plantDescription = $(modalContent).children('#plantDescription')
+    // var plantHeight = $(modalContent).children('#plantHeight')
+    // var plantSpread = $(modalContent).children('#plantSpread')
+    // var plantGrowthTime = $(modalContent).children('#plantGrowthTime')
+    // var plantSpacing = $(modalContent).children('#plantSpacing')
+    // var plantSowingMethod = $(modalContent).children('#plantSowingMethod')
+    // var plantSunReq = $(modalContent).children('#plantSunReq')
 
     // populates modal header with plant name from openfarm
-    $(modalHeader).text(fetchData.data.attributes.name)
+    $('#modalHeader').text(fetchData.data.attributes.name)
     
     // if there are common names, then populate as sub header
     // else, clear current sub header
     if (fetchData.data.attributes.common_names) {
-        $(modalSubHeader).text('Common name(s): ' + fetchData.data.attributes.common_names.join(', '))
+        $('#modalSubHeader').text('Common name(s): ' + fetchData.data.attributes.common_names.join(', '))
     } else {
-        $(modalSubHeader).empty()
+        $('#modalSubHeader').empty()
     }
 
     // sets image src to the url from openfarm
-   $(modalImg).attr('src', fetchData.data.attributes.main_image_path).addClass('modal-img')
+   $('#modalImg').attr('src', fetchData.data.attributes.main_image_path).addClass('modal-img')
 
     // populates the description from openfarm if there is one to display
     if (fetchData.data.attributes.description) {
-        $(plantDescription).text('Description: ' + fetchData.data.attributes.description)
+        $('#plantDescription').text('Description: ' + fetchData.data.attributes.description)
     } else {
-        $(plantDescription).text('Description: There is no description listed for this plant');
+        $('#plantDescription').text('Description: There is no description listed for this plant');
     }
 
    // add height (cm) if openfarm has one listed
    if (fetchData.data.attributes.height) {
-    $(plantHeight).text('Height: ' + fetchData.data.attributes.height + ' cm')
+    $('#plantHeight').text('Height: ' + fetchData.data.attributes.height + ' cm')
     } else {
-    $(plantHeight).text('Height: There is no height listed for this plant')
+    $('#plantHeight').text('Height: There is no height listed for this plant')
     }
 
    // add spread if openfarm has one listed
    if (fetchData.data.attributes.spread) {
-    $(plantSpread).text('Spread: ' + fetchData.data.attributes.spread + ' cm')
+    $('#plantSpread').text('Spread: ' + fetchData.data.attributes.spread + ' cm')
     } else {
-    $(plantSpread).text('Spread: There is no spread listed for this plant');
+    $('#plantSpread').text('Spread: There is no spread listed for this plant');
     }
 
    // add average growth time (growing degree days) if openfarm has one listed
    if (fetchData.data.attributes.growing_degree_days) {
-    $(plantGrowthTime).text('Growth Time: ' + fetchData.data.attributes.growing_degree_days + ' days')
+    $('#plantGrowthTime').text('Growth Time: ' + fetchData.data.attributes.growing_degree_days + ' days')
     } else {
-    $(plantGrowthTime).text('Growth Time: There is no growth time listed for this plant');
+    $('#plantGrowthTime').text('Growth Time: There is no growth time listed for this plant');
     }
 
    // add row spacing (cm) if openfarm has one listed
    if (fetchData.data.attributes.row_spacing) {
-    $(plantSpacing).text('Row Spacing: ' + fetchData.data.attributes.row_spacing + ' cm')
+    $('#plantSpacing').text('Row Spacing: ' + fetchData.data.attributes.row_spacing + ' cm')
     } else {
-    $(plantSpacing).text('Row Spacing: There is no row spacing listed for this plant');
+    $('#plantSpacing').text('Row Spacing: There is no row spacing listed for this plant');
     }
 
     // add sowing method if openfarm has one listed
     if (fetchData.data.attributes.sowing_method) {
-        $(plantSowingMethod).text('Sowing Method: ' + fetchData.data.attributes.sowing_method)
+        $('#plantSowingMethod').text('Sowing Method: ' + fetchData.data.attributes.sowing_method)
         } else {
-        $(plantSowingMethod).text('Sowing Method: There is no sowing method listed for this plant');
+        $('#plantSowingMethod').text('Sowing Method: There is no sowing method listed for this plant');
         }
 
     // add sun requirements if openfarm has one listed
     if (fetchData.data.attributes.sun_requirements) {
-        $(plantSunReq).text('Sun Requirements: ' + fetchData.data.attributes.sun_requirements)
+        $('#plantSunReq').text('Sun Requirements: ' + fetchData.data.attributes.sun_requirements)
         } else {
-        $(plantSunReq).text('Sun Requirements: There are no sun requirements listed for this plant');
+        $('#plantSunReq').text('Sun Requirements: There are no sun requirements listed for this plant');
         }
 
 
@@ -216,4 +216,6 @@ $(searchDisplayEl).on('click', 'a', function(event) {
     modalInformationHandler(modalId);
     
 });
+
+// $('.modal').on('blur', function)
 
