@@ -86,3 +86,9 @@ footer {
     width: 250px;
     height: 250px;
 }
+
+iframe {
+    width: 320px;
+    height: 200px;
+    border: solid 4px #37474F;
+}

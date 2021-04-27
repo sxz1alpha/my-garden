@@ -209,7 +209,7 @@ function videoPlayerFetch(plant) {
 
 function videoPlayerHandler(youtubeData) {
     for (var i = 0; i < youtubeData.length; i++)
-    $('#player' + i).attr('src', 'https://www.youtube.com/embed/' + youtubeData[i].id.videoId + '?enablejsapi=1')
+    $('.videoSection').append($('<iframe>').attr('id', 'player' + i).attr('frameborder', '0').attr('src', 'https://www.youtube.com/embed/' + youtubeData[i].id.videoId + '?enablejsapi=1'))
 }
 
 
