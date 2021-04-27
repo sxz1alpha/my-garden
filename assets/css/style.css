@@ -85,10 +85,12 @@ footer {
 .modal-img {
     width: 250px;
     height: 250px;
+    border: 4px solid var(--green);
 }
 
 iframe {
     width: 320px;
     height: 200px;
-    border: solid 4px #37474F;
+    border: solid 4px var(--green);
+    margin: 2px;
 }

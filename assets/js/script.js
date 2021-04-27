@@ -116,6 +116,8 @@ function modalInformationFetchHandler(plantId) {
 
 // populates the modal with plant info
 function modalDisplayHandler(modalId, fetchData) {
+    // clear previous youtube videos
+    $('.videoSection').html('')
 
     // populates modal header with plant name from openfarm
     $('#modalHeader').text(fetchData.data.attributes.name)
@@ -187,8 +189,8 @@ function modalDisplayHandler(modalId, fetchData) {
     // attatches the modal id as an href attribute for my garden button
    $('#fav-btn').attr('href', '#' + modalId);
 
+    // calls function to create embeded videos 
     videoPlayerFetch(fetchData.data.attributes.name)
-   console.log(fetchData)
 }
 
 function videoPlayerFetch(plant) {
@@ -208,6 +210,7 @@ function videoPlayerFetch(plant) {
 }
 
 function videoPlayerHandler(youtubeData) {
+    $('.videoSection').append($('<h5>').text('Top 5 Videos:'))
     for (var i = 0; i < youtubeData.length; i++)
     $('.videoSection').append($('<iframe>').attr('id', 'player' + i).attr('frameborder', '0').attr('src', 'https://www.youtube.com/embed/' + youtubeData[i].id.videoId + '?enablejsapi=1'))
 }
