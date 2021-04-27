@@ -68,7 +68,20 @@ var displayResults = function(results) {
 
         // add card to page
         searchDisplayEl.append(colEl);
+       
+        
     }
+    $("#fav-btn").click(function() {
+        console.log(this)
+        $('#faves').append(`
+            <li>
+                <button class="garden-item modal-trigger" href="${$(this).attr('href')}">${$(this).attr('name')}</button>
+            </li>`
+        )
+        
+    });
+
+
 };
 
 // search button handler
@@ -85,3 +98,61 @@ $("#searchBtn").click(function(event) {
     // reset search input
     $('#UserSearch').val('');
 });
+  
+function addModalId(id) {
+    $('.modal').attr('id', id);
+}
+
+function modalInformationHandler(plantId) {
+    var modalFetchUrl = "https://openfarm.cc/api/v1/crops/" + plantId
+    fetch(modalFetchUrl)
+    .then(function(response) {
+        if (response.ok) {
+            return response.json()
+        } else {
+            // return something if it failed
+        }
+    })
+    .then(function(data) {
+        modalTriggerHandler(plantId, data)
+    })
+}
+
+function modalTriggerHandler(modalId, fetchData) {
+    var modalContent = $('#' + modalId).children('.modal-content')
+    var modalHeader = $(modalContent).children('#modalHeader')
+    var modalSubHeader = $(modalContent).children('#modalSubHeader')
+    var modalImg = $(modalContent).children('#modalImg')
+    var modalText = $(modalContent).children('#modalP')
+    $(modalHeader).text(fetchData.data.attributes.name)
+    if (fetchData.data.attributes.common_names) {
+        $(modalSubHeader).text('Common name(s): ' + fetchData.data.attributes.common_names.join(', '))
+    } else {
+        $(modalSubHeader).empty()
+    }
+   $(modalImg).attr('src', fetchData.data.attributes.main_image_path).addClass('modal-img')
+   $(modalText).text('Description: ' + fetchData.data.attributes.description)
+   $('#fav-btn').attr('href', '#' + modalId).attr('name', fetchData.data.attributes.name);
+   console.log(fetchData)
+}
+
+$(searchDisplayEl).on('click', 'a', function(event) { 
+    var aTagId = $(this).attr('href')
+    console.log($(this).attr('href'))
+    var modalId = aTagId.replace('#', '');
+    addModalId(modalId);
+    $('#' + modalId).modal();
+    modalInformationHandler(modalId);
+});
+
+
+$(".garden-item").on('click', function(event) { 
+    var aTagId = $(this).attr('href')
+    console.log($(this).attr('href'))
+    var modalId = aTagId.replace('#', '');
+    addModalId(modalId);
+    $('#' + modalId).modal();
+    modalInformationHandler(modalId);
+});
+
+
