@@ -191,6 +191,8 @@ function modalDisplayHandler(modalId, fetchData) {
    console.log(fetchData)
 }
 
+
+
 // On click of the search area, this function looks for an <a> tag and cathes the href attribute
 $(searchDisplayEl).on('click', 'a', function(event) { 
     // finds the href attribute
@@ -213,21 +215,7 @@ $(searchDisplayEl).on('click', 'a', function(event) {
     
 });
 
-$('.modal').on('blur', function() {
-    $('#modalHeader').empty();
-    $('#modalSubHeader').empty();
-    $('#modalImg').attr('src', '');
-    $('#plantDescription').empty();
-    $('#plantHeight').empty();
-    $('#plantSpread').empty();
-    $('#plantGrowthTime').empty();
-    $('#plantSpacing').empty();
-    $('#plantSowingMethod').empty();
-    $('#plantSunReq').empty();
-
-})
-
-function errorModal(error) {
-    $('#errorModal').modal();
-    $('#errorTag').text(error);
-}
+// function errorModal(error) {
+//     $('#errorModal').modal();
+//     $('#errorTag').text(error);
+// }
