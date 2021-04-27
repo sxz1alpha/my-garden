@@ -102,29 +102,20 @@ function modalInformationFetchHandler(plantId) {
         if (response.ok) {
             return response.json()
         } else {
-            // return something if it failed
+            errorModal('There was an error processing your request. Please alert the dev team.')
         }
     })
     .then(function(data) {
         modalDisplayHandler(plantId, data)
     })
+    .catch(function(error) {
+        errorModal(`An error has occurred... ${error}`)
+    });
    
 }
 
 // populates the modal with plant info
 function modalDisplayHandler(modalId, fetchData) {
-    // creates variables to target modal elements
-    // var modalContent = $('#' + modalId).children('.modal-content')
-    // var modalHeader = $(modalContent).children('#modalHeader')
-    // var modalSubHeader = $(modalContent).children('#modalSubHeader')
-    // var modalImg = $(modalContent).children('#modalImg')
-    // var plantDescription = $(modalContent).children('#plantDescription')
-    // var plantHeight = $(modalContent).children('#plantHeight')
-    // var plantSpread = $(modalContent).children('#plantSpread')
-    // var plantGrowthTime = $(modalContent).children('#plantGrowthTime')
-    // var plantSpacing = $(modalContent).children('#plantSpacing')
-    // var plantSowingMethod = $(modalContent).children('#plantSowingMethod')
-    // var plantSunReq = $(modalContent).children('#plantSunReq')
 
     // populates modal header with plant name from openfarm
     $('#modalHeader').text(fetchData.data.attributes.name)
@@ -236,3 +227,7 @@ $('.modal').on('blur', function() {
 
 })
 
+function errorModal(error) {
+    $('#errorModal').modal();
+    $('#errorTag').text(error);
+}
