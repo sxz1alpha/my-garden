@@ -141,8 +141,7 @@ $("#searchBtn").click(function(event) {
 
 getLocal();
 
-// ----------------------------------------
-// start Dakota's Code
+
 
 // add id from plantId to modal 
 function addModalId(id) {
