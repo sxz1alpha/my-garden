@@ -60,7 +60,7 @@ var displayResults = function(results) {
 
     for(var i = 0; i < results.data.length; i++) {
         // created and add content for card of each search result
-        var colEl = $('<a>').addClass('modal-trigger col s12 m4 l3').attr('href', `#${results.data[i].id}`).attr('plantId', results.data[i].id);
+        var colEl = $('<a>').addClass('modal-trigger col s12 m6 l4').attr('href', `#${results.data[i].id}`).attr('plantId', results.data[i].id);
 
         var cardEl = $('<div>').addClass('card');
 
@@ -70,7 +70,7 @@ var displayResults = function(results) {
         } else {
             var imgSrc = results.data[i].attributes.main_image_path;
         }
-        var imageEl = $('<img>').attr('src', imgSrc).attr('style', "height:250px");
+        var imageEl = $('<img>').attr('src', imgSrc);
         imageDiv.append(imageEl);
         var spanEl = $('<span>').addClass('card-title').text(results.data[i].attributes.name);
         imageDiv.append(spanEl);
