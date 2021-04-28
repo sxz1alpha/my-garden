@@ -102,22 +102,40 @@ function modalInformationFetchHandler(plantId) {
         if (response.ok) {
             return response.json()
         } else {
-            // find way to create error modal
+            modalError()
         }
     })
     .then(function(data) {
         modalDisplayHandler(plantId, data)
     })
     .catch(function(error) {
-        console.log(error)
+        modalError(error)
     });
    
+}
+
+function modalError(error) {
+    // hide conversion button
+    $('.tooltipped', '#fav-btn').for(function() {
+        $(this).hide();   
+    }) 
+
+    // clear all items
+    $('.videoSection', '#modalImg', '#modalHeader', '#modalSubHeader', '#plantDescription', '#plantHeight', '#plantSpread', '#plantGrowthTime', '#plantSpacing', '#plantSowingMethod', '#plantSunReq').each(function() {
+        $(this).empty();
+    });
+
+    // alert error
+    $('#modalHeader').text('Something went wrong... ' + error)
 }
 
 // populates the modal with plant info
 function modalDisplayHandler(modalId, fetchData) {
     // clear previous youtube videos
     $('.videoSection').html('')
+
+    // clear previous img
+    $('#modalImg').attr('src', '');
 
     // populates modal header with plant name from openfarm
     $('#modalHeader').text(fetchData.data.attributes.name)
@@ -193,31 +211,42 @@ function modalDisplayHandler(modalId, fetchData) {
     videoPlayerFetch(fetchData.data.attributes.name)
 }
 
+// fetch for youtube information to pass to videoPlayerHandler()
 function videoPlayerFetch(plant) {
-    var youtubeData = ""
     var videoUrl = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&type=video&q=how%20to%20plant%20" + plant + "&key=AIzaSyAEFirxIyuY1z9A7SZBZWH4EJJ-HwM3pxk"
     fetch(videoUrl)
     .then(function(response) {
-        return response.json()
+        if (response.ok) {
+            return response.json()
+        } else {
+            $('.videoSection').text('No YouTube videos were found for this particular entry, please try another!')
+        }
     })
     .then(function(data) {
-        // youtubeData is now an array of 5 videos+information
-        youtubeData = data.items
-        console.log(youtubeData)
-        videoPlayerHandler(youtubeData)
+        videoPlayerHandler(data)
+    })
+    .catch(function(error) {
+        $('.videoSection').text(`An error has occurred loading videos... ${error}`);
     })
 
 }
 
-function videoPlayerHandler(youtubeData) {
-    $('.videoSection').append($('<h5>').text('Top 5 Videos:'))
-    for (var i = 0; i < youtubeData.length; i++)
+// creates embeded YouTube videos
+function videoPlayerHandler(data) {
+    // adds header to let user know this is the video section
+    $('.videoSection')
+    .append(
+        $('<h5>').text('Top 5 Videos:')
+    )
+    
+    // loops through each video and creates iframe
+    for (var i = 0; i < data.items.length; i++)
     $('.videoSection')
     .append(
         $('<iframe>')
         .attr('id', 'player' + i)
         .attr('frameborder', '0')
-        .attr('src', 'https://www.youtube.com/embed/' + youtubeData[i].id.videoId + '?enablejsapi=1')
+        .attr('src', 'https://www.youtube.com/embed/' + data.items[i].id.videoId + '?enablejsapi=1')
         .attr('allow', 'fullscreen;')
     )
 }
