@@ -206,10 +206,10 @@ function modalDisplayHandler(modalId, fetchData) {
     }
 
     // sets image src to the url from openfarm
-    if (fetchData.data.attributes.main_image_path) {
-        $('#modalImg').attr('src', fetchData.data.attributes.main_image_path).addClass('modal-img')
+    if (fetchData.data.attributes.main_image_path === "/assets/baren_field_square-4a827e5f09156962937eb100e4484f87e1e788f28a7c9daefe2a9297711a562a.jpg") {
+        $('#modalImg').attr('src', "./assets/images/baren_field_square-4a827e5f09156962937eb100e4484f87e1e788f28a7c9daefe2a9297711a562a.jpg")
     } else {
-        $('#modalImg').attr('src', './assets/images/baren_field_square-4a827e5f09156962937eb100e4484f87e1e788f28a7c9daefe2a9297711a562a')
+        $('#modalImg').attr('src', fetchData.data.attributes.main_image_path).addClass('modal-img')
     }
 
     // populates the description from openfarm if there is one to display
