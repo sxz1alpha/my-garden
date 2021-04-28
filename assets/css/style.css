@@ -74,7 +74,12 @@ footer {
 
 }
 
-<<<<<<< HEAD
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0; 
+ }
+
 
 /* ------------------------------ */
 
@@ -111,11 +116,3 @@ iframe {
     border: solid 4px var(--green);
     margin: 2px;
 }
-=======
-ul {
-   list-style-type: none;
-   padding: 0;
-   margin: 0; 
-}
-
->>>>>>> main
