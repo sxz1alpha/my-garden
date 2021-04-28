@@ -30,10 +30,11 @@
     <aside id="my-favorites" class="plants" >
             <div class="plant-list">
                 <h3>My Garden</h3>
-
-                <a> Remove input plant list</a>
-                <!--add spacing for a-->
+                <button id="garden-clear">Clear Garden</button>
             </div>
+            <ul id="faves">
+                <!-- my garden cards will be appended here -->
+            </ul>
     </aside>
     
     <!--footer-->
@@ -43,6 +44,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="./assets/js/script.js"></script>
+
+    <div id="" class="modal">
+        <div class="modal-content">
+            <div class="modal-footer">
+              <a href="#!" class="modal-close waves-effect waves-green btn-flat">X</a>
+            </div>
+          <h4 id="modalHeader"></h4>
+          <img id="modalImg" src="" alt="">
+          <p id="modalP"></p>
+          <button id="fav-btn">Add to favorites</button>
+          <div id="player"></div>
+        </div>
+    </div>
 </body>
 </html>
 

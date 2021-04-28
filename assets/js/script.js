@@ -1,3 +1,6 @@
+//global variables
+var myGarden = [];
+
 // DOM objects stored as variables
 var searchDisplayEl = $('#searchResults');
 
@@ -26,6 +29,22 @@ var searchAPI = function(userSearch) {
         .catch(function(error) {
             searchDisplayEl.text(`${error}`);
         });
+};
+
+// appends plant items to the page.
+var favesAppend = function() {
+    $('#faves').children().remove()
+    for (i = 0; i < myGarden.length; i++) {
+        $('#faves').append(`
+            <li>
+                <button 
+                class="garden-item modal-trigger" 
+                href="${myGarden[i].id}"
+                >${myGarden[i].name}</button>
+            </li>`
+        )
+    }
+    
 };
 
 // function to display search results from API request to the DOM
@@ -61,9 +80,45 @@ var displayResults = function(results) {
 
         // add card to page
         searchDisplayEl.append(colEl);
+       
+        
     }
 };
 
+// makes the button element in the my garden section
+$("body").on("click", "#fav-btn", function() {
+    
+    var plant = {name: `${$(this).attr('name')}`, id: `${$(this).attr('href')}`}
+    //loops through the my garden array and prevents a double add.
+    if (!myGarden.some(arrayPlant => arrayPlant.name === plant.name)) {
+        myGarden.push(plant);
+    } 
+    // appends the plant to the my garden section
+    favesAppend();
+    saveLocal();
+    
+});
+
+var saveLocal = function() {
+    localStorage.setItem("myGardenPlants", JSON.stringify(myGarden));
+};
+
+var getLocal = function() {
+    myGarden = JSON.parse(localStorage.getItem("myGardenPlants"));
+    //checks if local pull is invalid 
+    if (!myGarden) {
+        myGarden = []
+    }
+    favesAppend();
+};
+
+//clears the my garden section
+$("#garden-clear").click(function() {
+    myGarden = [];
+    saveLocal();
+    favesAppend();
+});
+    
 // search button handler
 $("#searchBtn").click(function(event) {
     // prevent default on submit
@@ -82,3 +137,5 @@ $("#searchBtn").click(function(event) {
     // reset search input
     $('#userSearch').val('');
 });
+
+getLocal();
