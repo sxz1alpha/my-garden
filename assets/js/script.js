@@ -1,4 +1,5 @@
-var myGarden = []
+//global variables
+var myGarden = [];
 
 // DOM objects stored as variables
 var searchDisplayEl = $('#searchResults');
@@ -31,21 +32,22 @@ var searchAPI = function(userSearch) {
         });
 };
 
+// appends plant items to the page.
 var favesAppend = function() {
     $('#faves').children().remove()
     for (i = 0; i < myGarden.length; i++) {
-        
         $('#faves').append(`
-        <li>
-            <button 
-            class="garden-item modal-trigger" 
-            href="${myGarden[i].id}"
-            >${myGarden[i].name}</button>
-        </li>`
-    )
+            <li>
+                <button 
+                class="garden-item modal-trigger" 
+                href="${myGarden[i].id}"
+                >${myGarden[i].name}</button>
+            </li>`
+        )
     }
     
 };
+
 // function to display search results from API request to the DOM
 var displayResults = function(results) {
     // clear previous search/information from DOM
@@ -88,9 +90,10 @@ var displayResults = function(results) {
 $("body").on("click", "#fav-btn", function() {
     
     var plant = {name: `${$(this).attr('name')}`, id: `${$(this).attr('href')}`}
-    if (!myGarden.includes(plant)) {
+    //loops through the my garden array and prevents a double add.
+    if (!myGarden.some(arrayPlant => arrayPlant.name === plant.name)) {
         myGarden.push(plant);
-    }
+    } 
     // appends the plant to the my garden section
     favesAppend();
     saveLocal();
@@ -103,6 +106,7 @@ var saveLocal = function() {
 
 var getLocal = function() {
     myGarden = JSON.parse(localStorage.getItem("myGardenPlants"));
+    //checks if local pull is invalid 
     if (!myGarden) {
         myGarden = []
     }
@@ -111,7 +115,9 @@ var getLocal = function() {
 
 //clears the my garden section
 $("#garden-clear").click(function() {
-    $('#faves').children().remove();
+    myGarden = [];
+    saveLocal();
+    favesAppend();
 });
     
 // search button handler
@@ -128,62 +134,5 @@ $("#searchBtn").click(function(event) {
     // reset search input
     $('#UserSearch').val('');
 });
-  
-function addModalId(id) {
-    $('.modal').attr('id', id);
-}
-
-function modalInformationHandler(plantId) {
-    var modalFetchUrl = "https://openfarm.cc/api/v1/crops/" + plantId
-    fetch(modalFetchUrl)
-    .then(function(response) {
-        if (response.ok) {
-            return response.json()
-        } else {
-            // return something if it failed
-        }
-    })
-    .then(function(data) {
-        modalTriggerHandler(plantId, data)
-    })
-}
-
-function modalTriggerHandler(modalId, fetchData) {
-    var modalContent = $('#' + modalId).children('.modal-content')
-    var modalHeader = $(modalContent).children('#modalHeader')
-    var modalSubHeader = $(modalContent).children('#modalSubHeader')
-    var modalImg = $(modalContent).children('#modalImg')
-    var modalText = $(modalContent).children('#modalP')
-    $(modalHeader).text(fetchData.data.attributes.name)
-    if (fetchData.data.attributes.common_names) {
-        $(modalSubHeader).text('Common name(s): ' + fetchData.data.attributes.common_names.join(', '))
-    } else {
-        $(modalSubHeader).empty()
-    }
-   $(modalImg).attr('src', fetchData.data.attributes.main_image_path).addClass('modal-img')
-   $(modalText).text('Description: ' + fetchData.data.attributes.description)
-   $('#fav-btn').attr('href', '#' + modalId).attr('name', fetchData.data.attributes.name);
-//    console.log(fetchData)
-}
-
-$(searchDisplayEl).on('click', 'a', function(event) { 
-    var aTagId = $(this).attr('href')
-    // console.log($(this).attr('href'))
-    var modalId = aTagId.replace('#', '');
-    addModalId(modalId);
-    $('#' + modalId).modal();
-    modalInformationHandler(modalId);
-});
-
-
-$(".garden-item").on('click', function(event) { 
-    var aTagId = $(this).attr('href')
-    // console.log($(this).attr('href'))
-    var modalId = aTagId.replace('#', '');
-    addModalId(modalId);
-    $('#' + modalId).modal();
-    modalInformationHandler(modalId);
-});
-
 
 getLocal();
