@@ -3,6 +3,7 @@ var myGarden = [];
 
 // DOM objects stored as variables
 var searchDisplayEl = $('#searchResults');
+var myGardenEl = $("#my-favorites");
 
 // function to take search and get api response 
 var searchAPI = function(userSearch) {
@@ -37,10 +38,10 @@ var favesAppend = function() {
     for (i = 0; i < myGarden.length; i++) {
         $('#faves').append(`
             <li>
-                <button 
-                class="garden-item modal-trigger" 
+                <a 
+                class="waves-effect waves-green btn-flat garden-item modal-trigger" 
                 href="${myGarden[i].id}"
-                >${myGarden[i].name}</button>
+                >${myGarden[i].name}</a>
             </li>`
         )
     }
@@ -332,3 +333,25 @@ $(searchDisplayEl).on('click', 'a', function(event) {
     modalInformationFetchHandler(modalId);
     
 });
+
+$(myGardenEl).on('click', 'a', function(event) { 
+    // finds the href attribute
+    var aTagId = $(this).attr('href')
+
+    // gets rid of '#' 
+    var modalId = aTagId.replace('#', '');
+   
+    // runs function to add modalid to the modal div
+    addModalId(modalId);
+
+    // looks for that new modal and initializes it
+    $('#' + modalId).modal();
+
+    // displays loading message for user
+    $('#modalHeader').text('Loading...');
+
+    // sends modal id to the fetch function
+    modalInformationFetchHandler(modalId);
+    
+});
+
