@@ -137,6 +137,9 @@ function modalDisplayHandler(modalId, fetchData) {
     // clear previous img
     $('#modalImg').attr('src', '');
 
+    // initialize tooltip
+    $('.tooltipped').tooltip()
+
     // populates modal header with plant name from openfarm
     $('#modalHeader').text(fetchData.data.attributes.name)
     
@@ -149,7 +152,11 @@ function modalDisplayHandler(modalId, fetchData) {
     }
 
     // sets image src to the url from openfarm
-   $('#modalImg').attr('src', fetchData.data.attributes.main_image_path).addClass('modal-img')
+    if (fetchData.data.attributes.main_image_path) {
+        $('#modalImg').attr('src', fetchData.data.attributes.main_image_path).addClass('modal-img')
+    } else {
+        $('#modalImg').attr('src', './assets/images/baren_field_square-4a827e5f09156962937eb100e4484f87e1e788f28a7c9daefe2a9297711a562a')
+    }
 
     // populates the description from openfarm if there is one to display
     if (fetchData.data.attributes.description) {
@@ -161,9 +168,6 @@ function modalDisplayHandler(modalId, fetchData) {
    // add height (cm) if openfarm has one listed
    if (fetchData.data.attributes.height) {
        $('#plantHeight').text('Height: ' + fetchData.data.attributes.height + ' cm ')
-    //    .append('<a class="btn tooltipped" data-position="top" data-tooltip="1 in = 2.56 cm">&#63;</a>')  
-    
-       $('.tooltipped').tooltip()
     } else {
         $('#plantHeight').text('Height: There is no height listed for this plant')
     }
@@ -205,7 +209,7 @@ function modalDisplayHandler(modalId, fetchData) {
 
 
     // attatches the modal id as an href attribute for my garden button
-   $('#fav-btn').attr('href', '#' + modalId);
+   $('#fav-btn').attr('href', '#' + modalId).attr('name', fetchData.data.attributes.name);
 
     // calls function to create embeded videos 
     videoPlayerFetch(fetchData.data.attributes.name)
