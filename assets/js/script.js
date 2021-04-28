@@ -20,15 +20,14 @@ var searchAPI = function(userSearch) {
                 return response.json();
             // if error with response, update DOM
             } else {
-                searchDisplayEl.text('There was an error processing your request. Please alert the dev team.');
-                return
+                throw new Error("There was an error with your search.");
             }
         })
         .then(function(data) {
             displayResults(data);
         })
         .catch(function(error) {
-            searchDisplayEl.text(`An error has occurred... ${error}`);
+            searchDisplayEl.text(`${error}`);
         });
 };
 
@@ -128,11 +127,15 @@ $("#searchBtn").click(function(event) {
     // store the user's entry
     var userSearch = $('#userSearch').val();
 
-    // pass the user's entry into the searchAPI function
-    searchAPI(userSearch);
+    if(!userSearch) {
+        searchDisplayEl.text("Please enter a valid search...");
+    } else {
+        // pass the user's entry into the searchAPI function
+        searchAPI(userSearch);
+    }
 
     // reset search input
-    $('#UserSearch').val('');
+    $('#userSearch').val('');
 });
 
 getLocal();
