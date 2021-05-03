@@ -177,13 +177,8 @@ $("#clearBtn").click(function(event) {
 
 
 getLocal();
-///SAIRA 
-var userRemove = $('#userRmv').val();
 
-//$("#remBtn").click(function(event)
-           
-
-
+var userRemove = $('#userRmv').val();   
 
 // add id from plantId to modal 
 function addModalId(id) {
@@ -348,8 +343,6 @@ function videoPlayerHandler(data) {
     )
 }
 
-
-
 // On click of the search area, this function looks for an <a> tag and cathes the href attribute
 $(searchDisplayEl).on('click', 'a', function(event) { 
     // finds the href attribute
@@ -392,4 +385,3 @@ $(myGardenEl).on('click', 'a', function(event) {
     modalInformationFetchHandler(modalId);
     
 });
-
