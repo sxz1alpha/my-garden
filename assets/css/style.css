@@ -84,6 +84,16 @@ footer div {
     padding: 15px;
 }
 
+.plants h3 {
+    text-align: center;
+    font-size: 2em;
+    color: var(--yellow);
+    text-shadow: 2px 2px 5px #616161 ;
+
+} */
+
+
+
 .modal {
     width: 80%;
     height: 80%;
