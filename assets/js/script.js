@@ -18,14 +18,13 @@ var searchAPI = function(userSearch) {
         .then(function(response) {
             // if response ok, json and send to displayResults function
             if(response.ok) {
-                return response.json();
+                response.json().then(function(data) {
+                    displayResults(data);
+                });
             // if error with response, update DOM
             } else {
                 throw new Error("There was an error with your search.");
             }
-        })
-        .then(function(data) {
-            displayResults(data);
         })
         .catch(function(error) {
             searchDisplayEl.text(`${error}`);
@@ -33,22 +32,21 @@ var searchAPI = function(userSearch) {
 };
 
 // appends plant items to the page.
+                //add color//
 var favesAppend = function() {
     $('#faves').children().remove()
     for (i = 0; i < myGarden.length; i++) {
         $('#faves').append(`
             <li>
-                <a 
-                class="waves-effect waves-green btn-flat garden-item modal-trigger" 
-                href="${myGarden[i].id}"
-                >${myGarden[i].name}</a>
+                <label>
+                    <input type="checkbox" class="filled-in green" id="remove-checkbox"/>
+                    <span>
+                        <a class="waves-effect waves-green btn-flat garden-item modal-trigger" href="${myGarden[i].id}" >${myGarden[i].name}</a>
+                    </span>
+                </label>
             </li>`
         )
-    }
-    
-    if (myGarden.length > 0) {
-        
-    }
+    }   
 };
 
 // function to display search results from API request to the DOM
@@ -63,7 +61,7 @@ var displayResults = function(results) {
 
     for(var i = 0; i < results.data.length; i++) {
         // created and add content for card of each search result
-        var colEl = $('<a>').addClass('modal-trigger col s12 m6 l4').attr('href', `#${results.data[i].id}`).attr('plantId', results.data[i].id);
+        var colEl = $('<a>').addClass('modal-trigger col s12 m6 l4 xl3').attr('href', `#${results.data[i].id}`).attr('plantId', results.data[i].id);
 
         var cardEl = $('<div>').addClass('card');
 
@@ -92,7 +90,7 @@ var displayResults = function(results) {
 // makes the button element in the my garden section
 $("body").on("click", "#fav-btn", function() {
     
-    var plant = {name: `${$(this).attr('name')}`, id: `${$(this).attr('href')}`}
+    var plant = {name: `${$(this).attr('name')}`, id: `${$(this).attr('href')}`, checkbox: false}
     //loops through the my garden array and prevents a double add.
     if (!myGarden.some(arrayPlant => arrayPlant.name === plant.name)) {
         myGarden.push(plant);
@@ -101,6 +99,29 @@ $("body").on("click", "#fav-btn", function() {
     favesAppend();
     saveLocal();
     
+});
+
+$("#faves").on("click", "#remove-checkbox", function() {
+
+    var plantName = this.nextElementSibling.children[0].innerHTML;
+    for(var i = 0; i < myGarden.length; i++) {
+        if (myGarden[i].name === plantName) {
+            myGarden[i].checkbox = !myGarden[i].checkbox;
+        }
+    }
+
+});
+
+$("#garden-remove").click(function() {
+    for(var i = 0; i < myGarden.length; i++) {
+        if (myGarden[i].checkbox) {
+            myGarden.splice(i, 1);
+        }
+    }
+
+    saveLocal();
+    favesAppend();
+
 });
 
 var saveLocal = function() {
@@ -122,7 +143,7 @@ $("#garden-clear").click(function() {
     saveLocal();
     favesAppend();
 });
-    
+
 // search button handler
 $("#searchBtn").click(function(event) {
     // prevent default on submit
@@ -142,9 +163,21 @@ $("#searchBtn").click(function(event) {
     $('#userSearch').val('');
 });
 
+$("#clearBtn").click(function(event) {
+    // prevent default on submit
+    event.preventDefault();
+    // pass the user's entry into the searchAPI function
+        searchAPI(userClear);
+    //}
+
+    // reset search input
+    $('#userClear').val('');
+});
+
+
 getLocal();
 
-
+var userRemove = $('#userRmv').val();   
 
 // add id from plantId to modal 
 function addModalId(id) {
@@ -309,8 +342,6 @@ function videoPlayerHandler(data) {
     )
 }
 
-
-
 // On click of the search area, this function looks for an <a> tag and cathes the href attribute
 $(searchDisplayEl).on('click', 'a', function(event) { 
     // finds the href attribute
@@ -353,4 +384,3 @@ $(myGardenEl).on('click', 'a', function(event) {
     modalInformationFetchHandler(modalId);
     
 });
-

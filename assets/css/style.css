@@ -13,6 +13,16 @@
     --off-white: #F5F2BC;
 }
 
+::placeholder {
+    color: black;
+}
+
+main {
+    background-image: url("../images/plant.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
 img {
     height: 200px;
 }
@@ -20,6 +30,8 @@ img {
 body {
     background-color: var(--off-white);
     min-height: 100vh;
+    flex-direction: column;
+    display:flex;
 }
 
 header { 
@@ -32,49 +44,41 @@ header h1 {
     font-weight: bold;
     margin: 0;
     font-size: 3em;
-    
+}
+
+.plant-search {
+    background-color: var(--light-green);
+    border-radius: 15px;
+    padding: 10px;
+    margin-top: 5px;
 }
 
 .plant-list {
-    background-color: var(--light-green);
-    min-height: calc(100vh - 30%);
+    background-color: var(--yellow);
+    min-height: 100vh;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 5px;
 }
 
+.plant-list h3 {
+    text-align: center;
+}
 
+.plant-list ul {
+    padding: 25px;
+    text-align: left;
+} 
 
-/*
 footer { 
-    padding: 20px 35px; 
     background-color: var(--green);
     width: 100%; 
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    line-height: 1.5;
-    margin: 0;
 }
 
-
-
-.container1 a {
-    text-decoration: none;
-    background-color: var(--yellow);
-    justify-content: space-around;
-    display: inline-block;
-    width: 100%;
-    text-decoration: none;    
-}
-
-
-.plants {
-        margin-right: 50px;
-        padding: 20px;
-        clear: both;
-        float: right;
-        width: 40%;
-        height: 100%;
-        background-color: var(--blue-green);
-        border-radius: 25px;
+footer div {  
+    line-height: 1.55;
+    text-align: center;
+    padding: 15px;
 }
 
 .plants h3 {
@@ -83,13 +87,15 @@ footer {
     color: var(--yellow);
     text-shadow: 2px 2px 5px #616161 ;
 
-} */
-
-
+}
 
 .modal {
     width: 80%;
     height: 80%;
+    border-radius: 15px;
+}
+
+.modal-content {
     background-color: var(--yellow);
 }
 
@@ -97,6 +103,7 @@ footer {
     width: 250px;
     height: 250px;
     border: 4px solid var(--green);
+    border-radius: 5px;
 }
 
 .modal-content p {
@@ -109,9 +116,10 @@ footer {
     margin: 10px;
 }
 
-
 .modal-footer {
-    color: var(--yellow);
+    background-color: var(--yellow);
+    display: flex;
+    justify-content: space-around;
 }
 
 iframe {
@@ -120,9 +128,9 @@ iframe {
     border: solid 4px var(--green);
     margin: 2px;
 }
+
 ul {
    list-style-type: none;
    padding: 0;
    margin: 0; 
 }
-

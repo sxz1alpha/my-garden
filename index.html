@@ -4,43 +4,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Garden</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel= "stylesheet" href="./assets/css/style.css" />
 </head>
 <body>
     <header> 
-        <h1>My Garden</h1>
+        <h1>The Garden</h1>
     </header>
-
+    
     <main>
-        <div class="row">
+        <div class="row nav">
             <section class="col s12 m9">
                 <form id= "plant-navigator" class="plant-search">
                     <input type="text" name="" id="userSearch"
                     placeholder="Search for a plant...">
-                    <input type="Submit" value="Search" id="searchBtn">
+                    <button type="Submit" value="Search" id="searchBtn" class="waves-effect waves-light green darken-1 btn">Search</button>
+                    <button value="Clear" id="clearBtn" class="waves-effect waves-light green darken-1 btn">Clear</button>
                 </form>
     
                 <div id="searchResults"></div>
-            </section>
+            </section> 
             
             <section id="my-favorites" class="col s12 m3 myGarden">
                 <div class="plant-list">
                     <h3>My Garden</h3>
-                    <ul id="faves">
-                        <!-- my garden cards will be appended here -->
+                    <ul id="faves" >
+                  
+                    <!-- my garden cards will be appended here -->
                     </ul>
-                    <button id="garden-clear">Clear Garden</button>
+                    <button id="garden-remove" class="waves-effect waves-light green darken-1 btn">Remove</button> 
+
+                    <button id="garden-clear" class="wames-effect waves-light green darken-1 btn">Clear All</button>
+                    <div id="egg-icon"></div>
                 </div>
-                <div id="egg-icon"></div>
             </section>
         </div>
-
     </main>
     
     <!--footer-->
-    <footer>
-        <a>Copyright &copy; 2021 My Garden</a>
+    <footer class="main-footer bottom-center">
+        <div> Copyright &copy; 2021 My Garden</div>
     </footer>
 
     <div id="" class="modal">
@@ -59,7 +63,7 @@
             <div class="videoSection"></div>
             <div class="modal-footer">
                 <a class="waves-effect waves-green btn-flat" id="fav-btn">Add To My Garden</a>
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="closeBtn">Close</a>
+                <a href="#!" class="modal-close waves-effect btn-flat" id="closeBtn">Close</a>
             </div>
         </div>
     </div>
@@ -70,4 +74,4 @@
 </body>
 </html>
 
-<!--target="_blank" to make sure they are not leaving the site but another file will open. Maybe use for youtube links-->
+
