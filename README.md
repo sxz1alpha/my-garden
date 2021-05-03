@@ -20,7 +20,7 @@ Select a plant in the *My Garden* section to get the modal of information displa
 
 
 ## Screenshot
-
+![Landing Page Screenshot](./assets/images/screenshot.PNG)
 
 
 ## Link
