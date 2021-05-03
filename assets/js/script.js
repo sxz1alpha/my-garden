@@ -33,19 +33,21 @@ var searchAPI = function(userSearch) {
 };
 
 // appends plant items to the page.
+                //add color//
 var favesAppend = function() {
     $('#faves').children().remove()
     for (i = 0; i < myGarden.length; i++) {
         $('#faves').append(`
             <li>
-                <a 
-                class="waves-effect waves-green btn-flat garden-item modal-trigger" 
-                href="${myGarden[i].id}"
-                >${myGarden[i].name}</a>
+                <label>
+                    <input type="checkbox" class="filled-in green" id="remove-checkbox"/>
+                    <span>
+                        <a class="waves-effect waves-green btn-flat garden-item modal-trigger" href="${myGarden[i].id}" >${myGarden[i].name}</a>
+                    </span>
+                </label>
             </li>`
         )
-    }
-    
+    }   
 };
 
 // function to display search results from API request to the DOM
@@ -89,7 +91,7 @@ var displayResults = function(results) {
 // makes the button element in the my garden section
 $("body").on("click", "#fav-btn", function() {
     
-    var plant = {name: `${$(this).attr('name')}`, id: `${$(this).attr('href')}`}
+    var plant = {name: `${$(this).attr('name')}`, id: `${$(this).attr('href')}`, checkbox: false}
     //loops through the my garden array and prevents a double add.
     if (!myGarden.some(arrayPlant => arrayPlant.name === plant.name)) {
         myGarden.push(plant);
@@ -98,6 +100,29 @@ $("body").on("click", "#fav-btn", function() {
     favesAppend();
     saveLocal();
     
+});
+
+$("#faves").on("click", "#remove-checkbox", function() {
+
+    var plantName = this.nextElementSibling.children[0].innerHTML;
+    for(var i = 0; i < myGarden.length; i++) {
+        if (myGarden[i].name === plantName) {
+            myGarden[i].checkbox = !myGarden[i].checkbox;
+        }
+    }
+
+});
+
+$("#garden-remove").click(function() {
+    for(var i = 0; i < myGarden.length; i++) {
+        if (myGarden[i].checkbox) {
+            myGarden.splice(i, 1);
+        }
+    }
+
+    saveLocal();
+    favesAppend();
+
 });
 
 var saveLocal = function() {
@@ -119,7 +144,7 @@ $("#garden-clear").click(function() {
     saveLocal();
     favesAppend();
 });
-    
+
 // search button handler
 $("#searchBtn").click(function(event) {
     // prevent default on submit
@@ -139,7 +164,24 @@ $("#searchBtn").click(function(event) {
     $('#userSearch').val('');
 });
 
+$("#clearBtn").click(function(event) {
+    // prevent default on submit
+    event.preventDefault();
+    // pass the user's entry into the searchAPI function
+        searchAPI(userClear);
+    //}
+
+    // reset search input
+    $('#userClear').val('');
+});
+
+
 getLocal();
+///SAIRA 
+var userRemove = $('#userRmv').val();
+
+//$("#remBtn").click(function(event)
+           
 
 
 
