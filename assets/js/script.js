@@ -170,7 +170,7 @@ function modalInformationFetchHandler(plantId) {
 
 function modalError(error) {
     // hide conversion button
-    $('.tooltipped', '#fav-btn').for(function() {
+    $('#fav-btn').for(function() {
         $(this).hide();   
     }) 
 
@@ -190,9 +190,6 @@ function modalDisplayHandler(modalId, fetchData) {
 
     // clear previous img
     $('#modalImg').attr('src', '');
-
-    // initialize tooltip
-    $('.tooltipped').tooltip()
 
     // populates modal header with plant name from openfarm
     $('#modalHeader').text(fetchData.data.attributes.name)
