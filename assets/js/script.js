@@ -18,14 +18,13 @@ var searchAPI = function(userSearch) {
         .then(function(response) {
             // if response ok, json and send to displayResults function
             if(response.ok) {
-                return response.json();
+                response.json().then(function(data) {
+                    displayResults(data);
+                });
             // if error with response, update DOM
             } else {
                 throw new Error("There was an error with your search.");
             }
-        })
-        .then(function(data) {
-            displayResults(data);
         })
         .catch(function(error) {
             searchDisplayEl.text(`${error}`);
@@ -62,7 +61,7 @@ var displayResults = function(results) {
 
     for(var i = 0; i < results.data.length; i++) {
         // created and add content for card of each search result
-        var colEl = $('<a>').addClass('modal-trigger col s12 m6 l4').attr('href', `#${results.data[i].id}`).attr('plantId', results.data[i].id);
+        var colEl = $('<a>').addClass('modal-trigger col s12 m6 l4 xl3').attr('href', `#${results.data[i].id}`).attr('plantId', results.data[i].id);
 
         var cardEl = $('<div>').addClass('card');
 
