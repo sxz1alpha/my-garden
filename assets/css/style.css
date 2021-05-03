@@ -70,6 +70,10 @@ header h1 {
     text-align: left;
 } 
 
+#egg-icon {
+    text-align: right;
+}
+
 footer { 
     background-color: var(--green);
     width: 100%; 

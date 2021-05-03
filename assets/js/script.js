@@ -46,7 +46,12 @@ var favesAppend = function() {
                 </label>
             </li>`
         )
-    }   
+    }
+    if (myGarden.length > 0) {
+        $('#egg-icon').html('<i class="fas fa-clipboard-list"></i>');
+    } else {
+        $('#egg-icon').html('');
+    }
 };
 
 // function to display search results from API request to the DOM
