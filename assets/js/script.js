@@ -46,6 +46,9 @@ var favesAppend = function() {
         )
     }
     
+    if (myGarden.length > 0) {
+        
+    }
 };
 
 // function to display search results from API request to the DOM
