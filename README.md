@@ -1,10 +1,35 @@
 # My Garden
-A gardening app for everyone!
+Have confidence planting your garden with this plant information application! Search for the plants you want to know more about, get their relevant planting information, see videos related to them, and even save them to your *My Garden* for quick reference in the future.
 
-As an amature gardner it is sometimes difficult to know what plants need more attention than others. This is what My Garden seeks to change.
 
-The My Garden App allows users to search for plants and get information about how to care for them properly. To avoid continaully searching
-for plant data, we have added a favorites section or "My Garden" that allows users quick and easy access to information about
-plants they favorite. 
+## User Story
 
-With an easy to use UI, data from third party API's and links to instructional videos, My Garden is the information portal for both new and experienced gardeners.
+**AS AN** amateur gardener,
+**I WANT** an application that allows me to search for the plants I want to grow in my garden and save them for quick reference,
+**SO THAT** I can access important information on how to grow and maintain different plants and have access to the plants I am growing in my garden.
+
+
+## Description
+Type in the name of the plant you want to find and click search.
+    * You will be presented with a list of results from the openfarm.cc API.
+    * Select one to be presented with a modal of information about that plant including related videos via the YouTube API. 
+    * Select the *Add To My Garden* to add the plant to the *My Garden* section.
+
+
+Select a plant in the *My Garden* section to get the modal of information displayed again. You can also remove added plants or clear all plants in your list. These are stored via `localStorage` for persistance.
+
+
+## Screenshot
+
+
+
+## Link
+
+https://sxz1alpha.github.io/my-garden/
+
+
+## Resources
+
+CSS Framework: https://materializecss.com/
+Plant Info API: https://openfarm.cc/
+YouTube Video API: https://developers.google.com/youtube/v3/docs/search/list
