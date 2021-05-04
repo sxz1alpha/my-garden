@@ -46,7 +46,21 @@ var favesAppend = function() {
                 </label>
             </li>`
         )
-    }   
+    }
+    if (myGarden.length > 0) {
+        $('#egg-icon').html('<i class="fas fa-clipboard-list"></i>');
+        
+        plantList = "";
+
+        for (var i = 0; i < myGarden.length; i++) {
+            plantName = myGarden[i].name;
+            plantList = plantList + `${plantName},`;
+        }
+
+        $('#egg-icon').attr('href', `./egg.html?garden=${plantList}`);
+    } else {
+        $('#egg-icon').html('');
+    }
 };
 
 // function to display search results from API request to the DOM
@@ -82,8 +96,6 @@ var displayResults = function(results) {
 
         // add card to page
         searchDisplayEl.append(colEl);
-       
-        
     }
 };
 

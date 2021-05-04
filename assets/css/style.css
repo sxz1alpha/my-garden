@@ -61,7 +61,6 @@ header h1 {
     margin-top: 5px;
 }
 
-
 .plant-list h3 {
     text-align: center;
 }
@@ -70,6 +69,10 @@ header h1 {
     padding: 25px;
     text-align: left;
 } 
+
+#egg-icon {
+    text-align: right;
+}
 
 footer { 
     background-color: var(--green);
@@ -88,9 +91,7 @@ footer div {
     color: var(--yellow);
     text-shadow: 2px 2px 5px #616161 ;
 
-} */
-
-
+}
 
 .modal {
     width: 80%;
@@ -137,4 +138,3 @@ ul {
    padding: 0;
    margin: 0; 
 }
-
