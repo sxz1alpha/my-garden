@@ -316,7 +316,7 @@ function modalDisplayHandler(modalId, fetchData) {
 
 // fetch for youtube information to pass to videoPlayerHandler()
 function videoPlayerFetch(plant) {
-    var videoUrl = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&type=video&q=how%20to%20plant%20" + plant + "&key=AIzaSyAEFirxIyuY1z9A7SZBZWH4EJJ-HwM3pxk"
+    var videoUrl = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&type=video&q=how%20to%20plant%20" + plant + "&key=AIzaSyCMPORVZJdaOUUus5_Ai-OfTRhBIcmYyAs"
     fetch(videoUrl)
     .then(function(response) {
         if (response.ok) {
