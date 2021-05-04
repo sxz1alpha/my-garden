@@ -1,5 +1,6 @@
 // dom object
 var recipeListEl = $('#recipe-list');
+var infoEl = $('#info');
 
 // get list of plants
 var getIngredientList = function() {
@@ -44,6 +45,9 @@ var apiPull = function(ingredientLIst) {
 var displayRecipes =  function(data) {
     // clear previous items
     recipeListEl.text('');
+
+    // update info
+    infoEl.text("Make some yummy meals with your harvested ingredients:");
 
     for (var i = 0; i < data.length; i++) {
         // created and add content for card of each search result
